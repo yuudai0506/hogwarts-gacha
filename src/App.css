@@ -1,18 +1,19 @@
-@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Noto+Serif+JP:wght@500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;900&family=Noto+Serif+JP:wght@500;700&display=swap');
 
 :root {
   --font-magic: 'Cinzel', 'Noto Serif JP', serif;
-  --bg-dark: #0d0e15;
+  --bg-dark: #090a0f;
   --gold-light: #fef08a;
   --gold-main: #eab308;
   --gold-dark: #854d0e;
+  --house-color: #eab308;
 }
 
 body {
   margin: 0;
   background-color: var(--bg-dark);
   background-image: 
-    radial-gradient(circle at 50% 20%, rgba(147, 51, 234, 0.15), transparent 70%),
+    radial-gradient(circle at 50% 20%, rgba(147, 51, 234, 0.2), transparent 70%),
     radial-gradient(circle at 80% 80%, rgba(234, 179, 8, 0.1), transparent 50%);
   color: #f3f4f6;
   font-family: var(--font-magic);
@@ -22,38 +23,74 @@ body {
 .magic-container {
   max-width: 900px;
   margin: 0 auto;
-  padding: 40px 20px;
+  padding: 30px 20px;
   text-align: center;
 }
 
-.magic-title {
-  font-size: 2.8rem;
-  background: linear-gradient(135deg, #fff 0%, var(--gold-light) 50%, var(--gold-main) 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  text-shadow: 0 0 20px rgba(234, 179, 8, 0.3);
-  margin-bottom: 8px;
+/* ヘッダー・金貨表示 */
+.status-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(0,0,0,0.5);
+  padding: 10px 20px;
+  border-radius: 20px;
+  border: 1px solid var(--house-color);
+  margin-bottom: 20px;
 }
 
-.magic-subtitle {
-  color: #9ca3af;
-  font-size: 0.95rem;
-  margin-bottom: 24px;
+.coin-badge {
+  color: var(--gold-light);
+  font-weight: bold;
+  font-size: 1.1rem;
 }
 
-/* タブ切り替え */
+/* モーダル (日刊予言者新聞) */
+.modal-overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.85);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.newspaper-card {
+  background: #e2d1a6;
+  color: #1a1a1a;
+  padding: 30px;
+  border-radius: 4px;
+  max-width: 450px;
+  width: 90%;
+  box-shadow: 0 0 30px rgba(0,0,0,0.8);
+  border: 4px double #4a3b2c;
+  transform: rotate(-1deg);
+}
+
+.newspaper-title {
+  font-family: 'Cinzel', serif;
+  font-size: 2rem;
+  font-weight: 900;
+  border-bottom: 3px double #1a1a1a;
+  margin-bottom: 10px;
+  letter-spacing: 2px;
+}
+
+/* タブボタン */
 .tab-container {
   display: flex;
   justify-content: center;
-  gap: 16px;
-  margin-bottom: 30px;
+  gap: 10px;
+  margin-bottom: 25px;
+  flex-wrap: wrap;
 }
 
 .tab-btn {
   background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(234, 179, 8, 0.3);
+  border: 1px solid var(--house-color);
   color: #d1d5db;
-  padding: 8px 24px;
+  padding: 8px 18px;
   border-radius: 20px;
   cursor: pointer;
   transition: all 0.3s;
@@ -61,46 +98,43 @@ body {
 }
 
 .tab-btn.active, .tab-btn:hover {
-  background: linear-gradient(135deg, var(--gold-dark), var(--gold-main));
+  background: var(--house-color);
   color: #000;
   font-weight: bold;
-  box-shadow: 0 0 12px rgba(234, 179, 8, 0.4);
+  box-shadow: 0 0 15px var(--house-color);
 }
 
-/* ガチャボタンエリア */
-.button-group {
+/* 杖＆魔法陣アクション */
+.wand-select-box {
+  background: rgba(20, 20, 35, 0.6);
+  border: 1px solid rgba(255,255,255,0.1);
+  padding: 15px;
+  border-radius: 12px;
+  margin-bottom: 20px;
+}
+
+.magic-circle-zone {
+  width: 140px;
+  height: 140px;
+  margin: 15px auto;
+  border: 3px dashed var(--house-color);
+  border-radius: 50%;
   display: flex;
+  align-items: center;
   justify-content: center;
-  gap: 16px;
-  margin-bottom: 30px;
+  cursor: grab;
+  user-select: none;
+  transition: transform 0.2s;
+  background: rgba(234, 179, 8, 0.05);
 }
 
-.btn-magic {
-  padding: 14px 28px;
-  font-size: 1.1rem;
-  font-weight: bold;
-  border: 2px solid var(--gold-light);
-  border-radius: 30px;
-  background: linear-gradient(135deg, #2e1065, #581c87);
-  color: #fff;
-  cursor: pointer;
-  box-shadow: 0 0 15px rgba(168, 85, 247, 0.4);
-  transition: all 0.2s ease-in-out;
-  font-family: var(--font-magic);
+.magic-circle-zone:active {
+  cursor: grabbing;
+  transform: scale(1.1) rotate(45deg);
+  background: rgba(234, 179, 8, 0.2);
 }
 
-.btn-magic:hover:not(:disabled) {
-  transform: translateY(-3px) scale(1.03);
-  box-shadow: 0 0 25px rgba(234, 179, 8, 0.7);
-  background: linear-gradient(135deg, #3b0764, #7e22ce);
-}
-
-.btn-magic:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-
-/* カードグリッド */
+/* ガチャカード */
 .card-grid {
   display: flex;
   flex-wrap: wrap;
@@ -109,28 +143,21 @@ body {
   margin-top: 20px;
 }
 
-/* 魔法カードデザイン */
 .spell-card {
-  width: 260px;
+  width: 250px;
   background: linear-gradient(145deg, #1f192f, #110d1a);
   border-radius: 16px;
   padding: 20px;
   box-sizing: border-box;
   position: relative;
-  overflow: hidden;
   border: 2px solid var(--rarity-color, #a855f7);
-  box-shadow: 0 10px 25px rgba(0,0,0,0.5), 0 0 15px var(--rarity-glow, rgba(168,85,247,0.3));
-  animation: cardAppear 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
-  transition: transform 0.3s;
-}
-
-.spell-card:hover {
-  transform: translateY(-5px);
+  box-shadow: 0 0 15px var(--rarity-glow, rgba(168,85,247,0.3));
+  animation: cardAppear 0.4s ease-out forwards;
 }
 
 @keyframes cardAppear {
-  0% { opacity: 0; transform: scale(0.5) rotateY(90deg); }
-  100% { opacity: 1; transform: scale(1) rotateY(0deg); }
+  0% { opacity: 0; transform: scale(0.6) translateY(20px); }
+  100% { opacity: 1; transform: scale(1) translateY(0); }
 }
 
 .rarity-badge {
@@ -141,51 +168,41 @@ body {
   font-weight: bold;
   color: #000;
   background: var(--rarity-color, #a855f7);
-  box-shadow: 0 0 8px var(--rarity-color, #a855f7);
-  margin-bottom: 12px;
 }
 
-.spell-name {
-  font-size: 1.4rem;
-  margin: 10px 0;
-  color: #fff;
-  letter-spacing: 1px;
-}
-
-.spell-desc {
-  font-size: 0.9rem;
-  color: #d1d5db;
-  line-height: 1.5;
-  background: rgba(0, 0, 0, 0.3);
-  padding: 10px;
-  border-radius: 8px;
-  border: 1px solid rgba(255,255,255,0.05);
-}
-
-/* 図鑑スタイル */
-.book-container {
+/* 図鑑 & デュエル */
+.book-container, .duel-container {
   background: rgba(17, 24, 39, 0.8);
-  border: 1px solid var(--gold-dark);
+  border: 1px solid var(--house-color);
   border-radius: 16px;
   padding: 24px;
 }
 
-.book-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 16px;
-  margin-top: 20px;
+.duel-box {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin: 30px 0;
 }
 
-.book-card {
-  padding: 16px;
+.duel-fighter {
+  background: rgba(0,0,0,0.4);
+  padding: 20px;
   border-radius: 12px;
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  text-align: left;
+  width: 200px;
+  border: 1px solid #4b5563;
 }
 
-.book-card.locked {
-  opacity: 0.3;
-  filter: grayscale(100%);
+.btn-action {
+  padding: 10px 20px;
+  border-radius: 20px;
+  border: none;
+  background: var(--gold-main);
+  color: #000;
+  font-weight: bold;
+  cursor: pointer;
+  font-family: var(--font-magic);
+}
+.btn-action:hover {
+  filter: brightness(1.2);
 }
