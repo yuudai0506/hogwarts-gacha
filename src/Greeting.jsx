@@ -1,23 +1,20 @@
-function Greeting({ onCastSpell, isLoading }) {
+function Greeting({ onCastSpell, onCastTenSpells, isLoading }) {
   return (
-    <div>
+    <div className="button-group">
       <button 
-        onClick={onCastSpell} 
+        className="btn-magic" 
+        onClick={() => onCastSpell(1)} 
         disabled={isLoading}
-        style={{
-          padding: '14px 28px',
-          fontSize: '18px',
-          backgroundColor: '#ffcc00',
-          color: '#333',
-          border: 'none',
-          borderRadius: '25px',
-          cursor: 'pointer',
-          fontWeight: 'bold',
-          boxShadow: '0 4px 15px rgba(255, 204, 0, 0.4)',
-          transition: 'transform 0.1s'
-        }}
       >
-        {isLoading ? '召喚中...🪄' : '🎰 魔法ガチャを引く！'}
+        {isLoading ? '詠唱中...✨' : '🪄 1連ガチャ'}
+      </button>
+
+      <button 
+        className="btn-magic" 
+        onClick={() => onCastSpell(10)} 
+        disabled={isLoading}
+      >
+        {isLoading ? '詠唱中...✨' : '🔮 10連ガチャ'}
       </button>
     </div>
   );
